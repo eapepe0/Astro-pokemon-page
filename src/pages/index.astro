@@ -1,16 +1,30 @@
 ---
 
----
+// Codigo server side only - Momento de construccion build time
+import { imageConfig } from 'astro:assets';
+import type { PokemonListResponse} from '../interfaces/pokemon-list.response';
+import MainLayout from "../layouts/MainLayout.astro";
+import PokemonCard from '../components/PokemonCard.astro';
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+
+
+const respuesta = await fetch('https://pokeapi.co/api/v2/pokemon');
+const data = (await respuesta.json()) as PokemonListResponse;
+
+
+const title = 'Pokémon Static | Home';
+
+---
+<MainLayout title={title}>
+	<h1 class="text-3xl text-center py-3">Listado de Pokemons</h1>
+	<hr>
+<section aria-label="Listado de Pokemons" class="py-5 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
+	{
+		data.results.map(({name , url})=>(
+			<PokemonCard name={name} url={url}/>
+		))
+	}
+</section>
+	
+
+</MainLayout>

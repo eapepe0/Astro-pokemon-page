@@ -1,0 +1,69 @@
+---
+
+interface Props {
+    name : string;
+    url :  string;
+}
+
+const {name , url} = Astro.props
+
+const id : string | undefined = url.split('/').at(-2);
+
+const imageSrc : string | undefined = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+
+
+---
+
+<div class="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition duration-300">
+   
+    <a href=`/pokemons/${name}`>
+        <img class="w-full h-48 object-cover hover:h-50"  src={imageSrc} alt={name}>
+        <div class="p-4">
+            <h1 class="text-xl font-bold text-gray-800 text-center relative overflow-hidden hover:animate-train-effect">
+                <span class="inline-block whitespace-nowrap capitalize">
+                    {name}
+                </span>
+            </h1>
+        </div>
+    </a>
+<!--     <div class="flex justify-center">
+        <a href=`/pokemons/${name}`     class="my-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+            Ver Detalles
+        </a>
+    </div> -->
+</div>
+
+<style>
+.train-sign {
+    display: inline-flex;
+    gap: 0.2rem;
+    overflow: hidden;
+}
+
+.letter {
+    display: inline-block;
+    transform-origin: center;
+    animation: flip 1.5s ease-in-out infinite;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2d3748;
+}
+
+@keyframes flip {
+    0% {
+        transform: rotateX(0deg);
+    }
+    25% {
+        transform: rotateX(90deg);
+    }
+    50% {
+        transform: rotateX(180deg);
+    }
+    75% {
+        transform: rotateX(270deg);
+    }
+    100% {
+        transform: rotateX(360deg);
+    }
+}
+</style>
