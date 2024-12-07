@@ -12,14 +12,9 @@ const id : string | undefined = url.split('/').at(-2);
 
 const imageSrc : string | undefined = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
 
-// usando el class:list podemos condicionalmente aplicar un estilo
- // 
-// <img class:list{[
-// "valor por defecto de css",
-// { 'valor aplicado depende del valor' : valor booleano
-//    'valor aplicado depende del valor2' : valor booleano negativo 
-// }
-// ]}
+
+ // llamando a un elemento con la propiedad transition:name 
+  // y asignandole un valor unico , podemos tener transiciones muy bonitas
 
 
 
@@ -28,13 +23,15 @@ const imageSrc : string | undefined = `https://raw.githubusercontent.com/PokeAPI
 <div class="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition duration-300">
    
     <a href=`/pokemons/${name}`>
-        <img class:list={[
+        <img 
+        transition:name={`${name}-image`}
+        class:list={[
             "w-full object-cover ",
             { 'h-72 hover:h-78' : isBig,
               'h-48 hover:h-50' : !isBig,
             }
             ]}  src={imageSrc} alt={name}>
-        <div class="p-4">
+        <div class="p-4" transition:name={`${name}-text`} transition:animate='slide'>
             <h1 class:list={[
                 "font-bold text-gray-800 text-center relative overflow-hidden",
                 {   
