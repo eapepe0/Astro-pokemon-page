@@ -1,0 +1,54 @@
+---
+
+import PokemonCard from "../../components/PokemonCard.astro";
+import type { PokemonListResponse } from "../../interfaces/pokemon-list.response";  // respuesta esperada de la API
+import MainLayout from "../../layouts/MainLayout.astro";
+
+import type { GetStaticPaths } from 'astro';  // define rutas dinamicas en tiempo de compilacion
+
+ // define las rutas dinamicas a generar de manera estatica en tiempo de compilacion
+export const getStaticPaths = (async () => {
+
+const respuesta = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');  // obtenemos los datos de la url
+const {results} = await respuesta.json() as PokemonListResponse;  // extraemos los result y los tratamos como interface de la respuesta obtenida
+
+return results.map(({name ,url})=>{
+    const  id  = url.split('/').at(-2)
+
+    return {
+        params : {id : id},
+        props: {name : name , url :url}
+    }
+})
+
+}) satisfies GetStaticPaths;
+
+
+const {id } = Astro.params
+const {name , url} = Astro.props
+
+const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`
+---
+
+<MainLayout title=`Pokemon : ${name.charAt(0).toUpperCase() + name.slice(1)}`>
+    <section class="mt-10 mx-10 flex flex-col justify-center items-center">
+        <div>
+            <a href="/">Regresar</a>
+            <h1 class="text-5xl capitalize">{name}</h1>
+        </div>
+        <div class="my-5">
+            <PokemonCard name={name} url={url} isBig={true}/>
+            <audio controls class="mt-5 w-full hover:scale-105  transition duration-300">
+                <source src={audioSrc} type="audio/ogg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </section>
+</MainLayout>
+
+
+<style>
+    a{
+        @apply hover:underline text-blue-500
+    }
+</style>
