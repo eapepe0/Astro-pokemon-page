@@ -5,6 +5,7 @@ import type { GetStaticPaths } from "astro";
 
 import MainLayout from "@layouts/MainLayout.astro"
 import PokemonCard from "@components/PokemonCard.astro";
+import Title from "@components/shared/Title.astro";
 
 
 
@@ -42,8 +43,8 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
 <MainLayout title=`Pokemon : ${nameCapitalize}` description={`Informacion sobre el pokemon : ${nameCapitalize}`} image={imageSrc}>
     <section class="mt-10 mx-10 flex flex-col justify-center items-center">
         <div>
-            <a href="/">Regresar</a>
-            <h1 class="text-5xl capitalize">{name}</h1>
+            <button onclick="history.back()" class="text-blue-500">Regresar</button>
+           <Title>{nameCapitalize}</Title>
         </div>
         <div class="my-5">
             <PokemonCard name={name} url={url} isBig={true}/>
@@ -64,6 +65,6 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
         @apply text-blue-500
     }
     #button{
-        @apply p-2 bg-white rounded-xl text-red-600 text-lg 
+        @apply p-2 bg-white rounded-xl text-red-600
     }
 </style>

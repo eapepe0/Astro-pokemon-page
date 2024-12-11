@@ -6,6 +6,7 @@ import type { PokemonListResponse} from '@interfaces/pokemon-list.response';
 import MainLayout from "@layouts/MainLayout.astro";
 import PokemonCard from '@components/PokemonCard.astro';
 import type { GetStaticPaths } from 'astro';
+import Title from '@components/shared/Title.astro';
 
  // getStaticPaths devuelve una funcion llamada paginate,  
  // el cual genera un array dividiendo el contendido en paginas separadas
@@ -58,11 +59,11 @@ const {page} = Astro.props;
 
 
 const title = `Pokémon Page | ${page.currentPage}`;
-console.log(page.url.prev)
+
 ---
 <MainLayout title={title}>
-	<h1 class="text-3xl text-center py-3">Paginado de Pokemons</h1>
-	<hr>
+	<Title>Paginado de Pokemons</Title>
+	
 <section aria-label="Paginado de Pokemons" class="py-5 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
 	{
 		page.data.map(({name , url})=>(
