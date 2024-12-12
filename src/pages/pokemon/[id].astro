@@ -38,7 +38,7 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
     <section class="mt-10 mx-10 flex flex-col justify-center items-center">
         <div>
             <button onclick="history.back()" class="text-blue-500">Regresar</button>
-           <Title>{nameCapitalize}</Title>
+           <Title>{name}</Title>
         </div>
         <div class="my-5">
             <PokemonCard name={name} url={url} isBig={true}/>
