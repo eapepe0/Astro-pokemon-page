@@ -47,7 +47,7 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
             <button onclick="history.back()" class="text-blue-500">Regresar</button>
            <Title>{name}</Title>
         </div>
-        <button class="ml-4" id="btn-favorite">
+        <button class="ml-4" id="btn-favorite" data-name = {name} data-id={id}>
             <Icon name="heart-empty" size={50}/>
             <Icon class="hidden" name="heart-full" size={50}/>
         </button>
@@ -65,6 +65,32 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
     </section>
 </MainLayout>
 
+
+<script>
+    interface FavoritePokemon{
+        name : string;
+        id : number;
+    }
+    /* agregamos este listener , cuando astro carga la pagina , sino el script se ejecuta cuando se monta solamente */
+    // tampoco carga este script si tenemos activado el <ViewTransitions/> de esta manera si nos deja
+    document.addEventListener('astro:page-load' , () => {
+        const btnFavorite = document.querySelector('#btn-favorite') as HTMLButtonElement; /* seleccionamos el boton */
+
+        // si no existe el boton salimos
+        if (!btnFavorite ) return;
+
+        const name = btnFavorite.dataset.name; /* sacamos el dato del nombre */
+        const id = btnFavorite.dataset.id; /* sacamos el dato del id */
+
+        // un evento al corazon para que haga algo
+        btnFavorite.addEventListener('click' , () => {
+            console.log({name , id})
+        })
+    })
+    
+
+    
+</script>
 
 <style>
     a{
