@@ -71,9 +71,9 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
         name : string;
         id : number;
     }
-    /* agregamos este listener , cuando astro carga la pagina , sino el script se ejecuta cuando se monta solamente */
-    // tampoco carga este script si tenemos activado el <ViewTransitions/> de esta manera si nos deja
-    document.addEventListener('astro:page-load' , () => {
+
+
+    const handlePageLoad = () =>{
         const btnFavorite = document.querySelector('#btn-favorite') as HTMLButtonElement; /* seleccionamos el boton */
 
         // si no existe el boton salimos
@@ -86,10 +86,41 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
         btnFavorite.addEventListener('click' , () => {
             console.log({name , id})
         })
-    })
+    }
+
+    /* agregamos este listener , cuando astro carga la pagina , sino el script se ejecuta cuando se monta solamente */
+    // tampoco carga este script si tenemos activado el <ViewTransitions/> de esta manera si nos deja
+
+    document.addEventListener('astro:page-load' , handlePageLoad);
     
 
-    
+
+/* PROBAMOS EL Ciclo de vida del <ViewTransitions/> */
+
+/*primer ciclo :  antes de la preparacion */
+document.addEventListener('astro:before-preparation',()=>{
+    console.log("astro:before-preparation");
+})
+
+/* segundo ciclo : despues de la preparacion */
+document.addEventListener('astro:after-preparation',()=>{
+    console.log("astro:after-preparation");
+})
+
+/* tercer ciclo : antes del cambio */
+document.addEventListener('astro:before-swap',()=>{
+    console.log("astro:before-swap");
+})
+
+/* cuarto ciclo : despues del cambio */
+document.addEventListener('astro:after-swap',()=>{
+    console.log("astro:after-swap");
+})
+
+/* quinto ciclo : carga de pagina */
+document.addEventListener('astro:page-load',()=>{
+    console.log("astro:page-load");
+})
 </script>
 
 <style>
