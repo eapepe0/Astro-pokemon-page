@@ -1,0 +1,60 @@
+---
+import { Counter } from "@components/Counter";
+import Title from "@components/shared/Title.astro";
+import MainLayout from "@layouts/MainLayout.astro";
+
+
+---
+
+<MainLayout title="Islas">
+  <Title>Islas</Title>
+  <div style={{
+    height : '2000px',
+    backgroundColor : 'red',
+    opacity : 0.4
+  }}>
+
+</div>
+
+  <!-- <Counter client:load/> -->
+   <h1 class="mt-5">Carga el componente solamente cuando es visible</h1>
+   <hr/>
+   <Counter client:visible/>
+</MainLayout>
+
+
+
+ <!-- 
+ Directivas del lado del cliente
+
+
+### client:load ###
+
+  Carga e hidrata el componente inmediatamente carga la pagina
+
+### client:idle ###
+
+  Carga e hidrata el componente una vez que termina la pagina y su carga inicial
+
+### client:visible
+
+  Carga e hidrata el componente una vez que el componente entra en el ViewPort del usuario
+  Por ejemplo tenemos un componente en el fondo de la pantalla, que no es visible hasta que bajemos
+  no se cargara hasta que sea vea
+
+
+### client: visible={{rootMargin : "200px"}}
+
+  Hace extamente lo mismo que visible , pero el componente carga en este ejemplo 200px antes que sea visible
+  para darnos un tiempo de precarga y que el componente ya este cargado cuando sea visible
+
+### client:media="(max-width: 50em)"
+
+  El componente empezara a cargar e hidratarse cuando un media-query de CSS es cumplido
+  Sirve por ejempo para no cargar un Sidebar y un elemento que solamente es visible en ciertos tamaños de pantalla
+
+### client:only={"react" o "preact" o "svelte" o "vue" o "solid-js" o "lit"}
+  
+  Actua como client:load , pero evita la renderizacion en el servidor de la parte HTML , solo se renderiza en el cliente
+
+ -->
