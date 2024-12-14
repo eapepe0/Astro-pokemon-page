@@ -91,12 +91,21 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
 
         const heartFull = btnFavorite.querySelector('[data-full]') as HTMLElement
 
+        // si encuentra el nombre en favoritos se vuelve true
+        const isFavorite = favoritePokemons.some((fav) => fav.name === name); 
+        
+        if(isFavorite === true){
+            heartEmpty.classList.add('hidden')
+            heartFull.classList.remove('hidden')
+        }
+
+
         const toggleFavorite = () =>{
             const isFavorite = favoritePokemons.some((fav) => fav.name === name); // si encuentra el nombre en favoritos se vuelve true
 
             if (isFavorite){
                 // Removemos
-                favoritePokemons.filter(fav => fav.name !== name);
+                favoritePokemons = favoritePokemons.filter((fav) => fav.name !== name);
             } else{
                 // Agregamos
                 favoritePokemons.push({
