@@ -10,10 +10,20 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components/*":["./src/components/*"],
-      "@interfaces/*":["./src/interfaces/*"],
-      "@layouts/*":["./src/layouts/*"],
-      "@pages/*":["./src/pages/*"],
-    }
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@interfaces/*": [
+        "./src/interfaces/*"
+      ],
+      "@layouts/*": [
+        "./src/layouts/*"
+      ],
+      "@pages/*": [
+        "./src/pages/*"
+      ]
+    },
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
   }
 }
