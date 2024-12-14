@@ -48,8 +48,8 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
            <Title>{name}</Title>
         </div>
         <button class="ml-4" id="btn-favorite" data-name = {name} data-id={id}>
-            <Icon name="heart-empty" size={50}/>
-            <Icon class="hidden" name="heart-full" size={50}/>
+            <Icon data-empty name="heart-empty" size={50}/>
+            <Icon data-full class="hidden" name="heart-full" size={50}/>
         </button>
     </div>
         <div class="my-5">
@@ -74,17 +74,47 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
 
 
     const handlePageLoad = () =>{
+
+        // guardamos en favoritePokemon o lo que haya en el localStorage , si no existe un arreglo vacio
+        let favoritePokemons : FavoritePokemon[] = JSON.parse(localStorage.getItem('favorites') ?? "[]");
+
         const btnFavorite = document.querySelector('#btn-favorite') as HTMLButtonElement; /* seleccionamos el boton */
 
         // si no existe el boton salimos
         if (!btnFavorite ) return;
 
-        const name = btnFavorite.dataset.name; /* sacamos el dato del nombre */
-        const id = btnFavorite.dataset.id; /* sacamos el dato del id */
+        const name = btnFavorite.dataset.name ?? ''; /* sacamos el dato del nombre */
+        const id = btnFavorite.dataset.id ?? ''; /* sacamos el dato del id */
+
+        // sacamos el estado del corazon
+        const heartEmpty = btnFavorite.querySelector('[data-empty]') as HTMLElement
+
+        const heartFull = btnFavorite.querySelector('[data-full]') as HTMLElement
+
+        const toggleFavorite = () =>{
+            const isFavorite = favoritePokemons.some((fav) => fav.name === name); // si encuentra el nombre en favoritos se vuelve true
+
+            if (isFavorite){
+                // Removemos
+                favoritePokemons.filter(fav => fav.name !== name);
+            } else{
+                // Agregamos
+                favoritePokemons.push({
+                    id: +id, // le agregamos el + para convertir de string a number
+                    name : name
+                })
+            }
+
+            localStorage.setItem('favorites', JSON.stringify(favoritePokemons))
+        }
 
         // un evento al corazon para que haga algo
         btnFavorite.addEventListener('click' , () => {
-            console.log({name , id})
+            heartEmpty.classList.toggle('hidden')
+            heartFull.classList.toggle('hidden')
+
+            toggleFavorite();
+
         })
     }
 
@@ -92,35 +122,10 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
     // tampoco carga este script si tenemos activado el <ViewTransitions/> de esta manera si nos deja
 
     document.addEventListener('astro:page-load' , handlePageLoad);
-    
+   
 
 
-/* PROBAMOS EL Ciclo de vida del <ViewTransitions/> */
 
-/*primer ciclo :  antes de la preparacion */
-document.addEventListener('astro:before-preparation',()=>{
-    console.log("astro:before-preparation");
-})
-
-/* segundo ciclo : despues de la preparacion */
-document.addEventListener('astro:after-preparation',()=>{
-    console.log("astro:after-preparation");
-})
-
-/* tercer ciclo : antes del cambio */
-document.addEventListener('astro:before-swap',()=>{
-    console.log("astro:before-swap");
-})
-
-/* cuarto ciclo : despues del cambio */
-document.addEventListener('astro:after-swap',()=>{
-    console.log("astro:after-swap");
-})
-
-/* quinto ciclo : carga de pagina */
-document.addEventListener('astro:page-load',()=>{
-    console.log("astro:page-load");
-})
 </script>
 
 <style>
