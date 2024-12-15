@@ -4,10 +4,17 @@ import Title from "@components/shared/Title.astro";
 import MainLayout from "@layouts/MainLayout.astro";
 
 
+ // vamos a enviar este valor al componente Counter
+const counterValue = 20;
+
 ---
 
 <MainLayout title="Islas">
   <Title>Islas</Title>
+  <video controls="" autoplay="true" transition:persist ="media-player">
+    <source src="https://ia804502.us.archive.org/33/items/GoldenGa1939_3/GoldenGa1939_3_512kb.mp4" type="video/mp4">
+  </video>
+
   <div style={{
     height : '2000px',
     backgroundColor : 'red',
@@ -16,10 +23,17 @@ import MainLayout from "@layouts/MainLayout.astro";
 
 </div>
 
-  <!-- <Counter client:load/> -->
+  
    <h1 class="mt-5">Carga el componente solamente cuando es visible</h1>
    <hr/>
-   <Counter client:visible/>
+   <h3 class="mt-5"><code>counterValue = 20</code></h3>
+
+   <Counter client:visible initValue={counterValue} transition:persist-props transition:persist="counter">
+    <!-- Enviamos un Componente dentro de una isla -->
+    <Title>Counter Title</Title>
+   </Counter>
+
+   
 </MainLayout>
 
 
@@ -56,5 +70,26 @@ import MainLayout from "@layouts/MainLayout.astro";
 ### client:only={"react" o "preact" o "svelte" o "vue" o "solid-js" o "lit"}
   
   Actua como client:load , pero evita la renderizacion en el servidor de la parte HTML , solo se renderiza en el cliente
+
+ -->
+
+<!--
+ si queremos que el valor se comparta entre islas usamos transition:persist="nombre de lo que se compartira"
+
+-->
+
+ <!-- 
+
+  Cuando se añade transition:persist a una isla, 
+  el estado se mantiene durante la navegación, 
+  pero el componente se vuelve a renderizar con nuevos props. 
+  Esto es útil, por ejemplo, cuando un componente recibe props específicos 
+  de la página, como el title de la página actual.
+
+
+  Con transition:persist-props ,al añadir esta directiva se conservarán 
+  los accesorios existentes de una isla
+  (no se volverá a renderizar con nuevos valores) 
+  además de mantener su estado existente.
 
  -->
