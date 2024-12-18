@@ -4,7 +4,7 @@ import type { GetStaticPaths } from "astro";
 import {Icon} from 'astro-icon/components';
 
 import MainLayout from "@layouts/MainLayout.astro"
-import PokemonCard from "@components/PokemonCard.astro";
+import PokemonCard from "@components/pokemons/PokemonCard.astro";
 import Title from "@components/shared/Title.astro";
 
 
@@ -67,12 +67,9 @@ const nameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
 
 
 <script>
-    interface FavoritePokemon{
-        name : string;
-        id : number;
-    }
+import type { FavoritePokemon } from "@interfaces/favorite-pokemon";
 
-
+    
     const handlePageLoad = () =>{
 
         // guardamos en favoritePokemon o lo que haya en el localStorage , si no existe un arreglo vacio
